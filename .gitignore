@@ -1,3 +1,6 @@
 rssaggregator.exe
 .env
+.test.env
 init.ps1
+init.sh
+docker-compose.yml
