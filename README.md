@@ -18,6 +18,20 @@ I have provided two ready-to-use scripts, one for Windows and another for Linux.
 
 I have initiated the setup for a test suite but have not yet written the actual tests. Adding a comprehensive test suite is an essential step to ensure the reliability and correctness of the application. Feel free to contribute by adding appropriate tests.
 
+## Caveat
+
+To modify the files rss.go, ./db/post.go, and scraper.go according to the structure of an XML or any other file you wish to aggregate, follow these steps:
+
+Open the file rss.go and locate the code responsible for parsing the XML feed. This code should be responsible for extracting relevant information from the XML and creating blog posts. Modify this code to match the structure of the XML or the file you want to aggregate.
+
+Similarly, open the file ./db/post.go and find the code that handles storing the blog posts in the database. Adjust this code to ensure that the extracted information from the XML or the file is stored correctly in the database.
+
+Finally, open the file scraper.go and identify the code that initiates the scraping process. Make any necessary changes to this code to fetch the XML or the desired file from the URL https://wagslane.dev/index.xml or any other URL you wish to use for aggregation.
+
+By modifying these three files (rss.go, ./db/post.go, and scraper.go), you can customize the structure and source of the content you want to aggregate. Ensure that the modifications align with the structure of the XML or the file you intend to use.
+
+If you have any further questions, feel free to ask!
+
 ## Getting Started
 
 To get started with the project, follow these steps:
@@ -64,7 +78,7 @@ networks:
   goserver:
 ```
 
-### Script to run the project on Linux (init.ps1)
+### Script to run the project on Linux (init.sh)
 
 ```sh
 #!/bin/bash
