@@ -60,3 +60,34 @@ func CreatePost(ctx context.Context, db *gorm.DB, arg CreatePostParams) (Post, e
 
 	return post, nil
 }
+
+func GetAllPosts(ctx context.Context, db *gorm.DB) ([]Post, error) {
+	var posts []Post
+
+	err := db.WithContext(ctx).
+		Order("published_at DESC").
+		Find(&posts).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return posts, nil
+}
+
+func GetFilteredPosts(ctx context.Context, db *gorm.DB, userID uuid.UUID, limit int) ([]Post, error) {
+	var posts []Post
+
+	err := db.WithContext(ctx).
+		Joins("JOIN feed_follows ON feed_follows.feed_id = posts.feed_id").
+		Where("feed_follows.user_id = ?", userID).
+		Order("posts.published_at DESC").
+		Limit(limit).
+		Find(&posts).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return posts, nil
+}

@@ -62,3 +62,36 @@ func (apiCfg *APIapiConfig) handlerGetUser(w http.ResponseWriter, r *http.Reques
 	}
 	respondWithJSON(w, 200, res)
 }
+
+func (apiCfg *APIapiConfig) handlerGetPostsFromUser(w http.ResponseWriter, r *http.Request, user database.User) {
+	posts, err := database.GetAllPosts(r.Context(), apiCfg.DB)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Couldn't get posts: %v", err))
+		return
+	}
+
+	// Cria a resposta
+	res := GetFilteredPostsResponse{
+		Posts: make([]FilteredPost, len(posts)),
+	}
+
+	for i, post := range posts {
+		res.Posts[i] = FilteredPost{
+			ID:          post.ID,
+			CreatedAt:   post.CreatedAt,
+			UpdatedAt:   post.UpdatedAt,
+			FeedID:      post.FeedID,
+			Title:       post.Title,
+			Description: nil, // Define inicialmente como nil
+			Url:         post.Url,
+			PublishedAt: post.PublishedAt,
+		}
+
+		// Define o campo Description apenas se for válido
+		if post.Description.Valid {
+			res.Posts[i].Description = &post.Description.String
+		}
+	}
+
+	respondWithJSON(w, 200, res)
+}

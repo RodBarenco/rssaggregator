@@ -49,3 +49,20 @@ type FeedFollowResponse struct {
 	FeedIDs    uuid.UUID `json:"feed_ids"`
 	FollowedAt time.Time `json:"updated_at"`
 }
+
+// GET POSTS FROM USERS
+
+type GetFilteredPostsResponse struct {
+	Posts []FilteredPost `json:"posts"`
+}
+
+type FilteredPost struct {
+	ID          uuid.UUID `json:"id"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	FeedID      uuid.UUID `json:"feed_id"`
+	Title       string    `json:"title"`
+	Description *string   `json:"description"`
+	Url         string    `json:"url"`
+	PublishedAt time.Time `json:"published_at"`
+}
