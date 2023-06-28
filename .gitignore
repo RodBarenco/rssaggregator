@@ -4,3 +4,4 @@ rssaggregator.exe
 init.ps1
 init.sh
 docker-compose.yml
+process.pid
